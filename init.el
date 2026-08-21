@@ -55,6 +55,34 @@
  :config)
 (evil-mode 1)
 
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  :config
+  ;; Grow and shrink the minibuffer dynamically
+  (setq vertico-resize t)
+  
+  ;; Optionally enable cycling for the candidate list
+  (setq vertico-cycle t))
+
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  :ensure t
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init
+
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
