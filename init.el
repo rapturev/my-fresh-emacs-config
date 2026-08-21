@@ -1,5 +1,7 @@
 (keymap-global-set "C-c p p" 'package-list-packages)
 (keymap-global-set "C-c p r" 'package-refresh-contents)
+(keymap-global-set "<f5>" 'customize-themes)
+(keymap-global-set "<f8>" 'treemacs)
 
 (setq inhibit-startup-message t)
 
@@ -11,7 +13,7 @@
 
 (menu-bar-mode -1)    
 
-(set-face-attribute 'default nil :font "Cascadia Code" :height 125)
+(set-face-attribute 'default nil :font "Cascadia Code NF" :height 125)
 
 ;; Initialize package sources
 (require 'package)
@@ -88,7 +90,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(doom-Iosvkem))
+ '(custom-enabled-themes '(doom-winter-is-coming-dark-blue))
  '(custom-safe-themes
    '("166a2faa9dc5b5b3359f7a31a09127ebf7a7926562710367086fcc8fc72145da"
      "e8bd9bbf6506afca133125b0be48b1f033b1c8647c628652ab7a2fe065c10ef0"
@@ -175,3 +177,40 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+ 
+(save-place-mode 1)
+(recentf-mode 1)
+(setq recentf-max-menu-items 50)
+(setq recentf-max-saved-items 50)
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :custom
+  ;; Configure sizing and behavior
+  (treemacs-width 35)
+  (treemacs-is-never-other-window t) ; Skip treemacs when cycling windows via C-x o
+  (treemacs-silent-refresh t)
+  
+  ;; Enable useful visual integrations
+  (treemacs-git-mode 'simple)        ; Highlight files based on Git status ('extended for directories)
+  (treemacs-filewatch-mode t)        ; Refresh automatically on file system changes
+  (treemacs-follow-mode t)           ; Keep treemacs in sync with your current buffer
+  
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+		
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+
+
+
