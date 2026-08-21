@@ -30,6 +30,9 @@
 
 (use-package doom-themes
  :ensure t)
+ 
+(electric-pair-mode 1)
+
 
 (use-package php-mode
  :ensure t)
