@@ -268,4 +268,20 @@
         ("C-k" . company-select-previous)
         ("C-n" . company-complete-selection)
         ("RET" . company-complete-selection)))
+		
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config
+  ;; Customize the look and feel
+  (setq doom-modeline-height 25     ; sets modeline height
+        doom-modeline-bar-width 4   ; sets right bar width
+        doom-modeline-persp-name t  ; displays perspective name
+        doom-modeline-icon nil        ; enables/disables icons
+        doom-modeline-major-mode-icon nil
+        doom-modeline-minor-modes nil ; hide minor modes for cleanliness
+		lsp-modeline-code-actions-enable nil
+        doom-modeline-checker-simple-format t
+        doom-modeline-vcs-max-length 12))
+
 	
