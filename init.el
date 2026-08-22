@@ -16,6 +16,13 @@
 
 (set-face-attribute 'default nil :font "Cascadia Code NF" :height 125)
 
+;; Set PowerShell as the default M-x shell on Windows
+(when (eq system-type 'windows-nt)
+  (setq explicit-shell-file-name "pwsh.exe")
+  ;; Use empty arguments to prevent startup issues
+  (setq explicit-powershell.exe-args '()))
+
+
 ;; Initialize package sources
 (require 'package)
 
