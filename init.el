@@ -3,6 +3,7 @@
 (keymap-global-set "<f5>" 'customize-themes)
 (keymap-global-set "<f8>" 'treemacs)
 ;; (keymap-global-set "g d" 'lsp-find-definition)
+(keymap-global-set "C-x <f1>" 'dashboard-open)
 
 (setq inhibit-startup-message t)
 
@@ -290,5 +291,30 @@
 		lsp-modeline-code-actions-enable nil
         doom-modeline-checker-simple-format t
         doom-modeline-vcs-max-length 12))
+		
+(use-package dashboard
+  :ensure t
+  :config
+  ;; Enable startup hook to open the dashboard automatically
+  (dashboard-setup-startup-hook)
+  
+  ;; Set the title and banner
+  (setq dashboard-banner-logo-title "Welcome to Emacs")
+  ;; Use the built-in Emacs logo banner (or choose 'official)
+  (setq dashboard-startup-banner 'official)
+  
+  ;; Content configuration: choose widgets and item limits
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
+  
+  ;; Project backend ('project-el is built-in, 'projectile is optional)
+  (setq dashboard-projects-backend 'project-el)
+  
+  ;; UI Styling adjustments
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts t))
+
 
 	
