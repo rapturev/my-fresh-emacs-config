@@ -98,7 +98,10 @@
  :config
  ;; Optional: Enable premium feature licence key if you have one
  ;; (setq lsp-intelephense-licence-key "YOUR_KEY_HERE")
-)
+ )
+ 
+ (setq lsp-enable-file-watchers nil)
+
   
 (use-package evil
  :ensure t
@@ -219,7 +222,11 @@
      "26e644fb119d4f5e4b576bae0e37e949721cb43ca6d234c9318208bad2b77cf6"
      "4c92d278dc295b63daf817d668523d442058d6c90728958dc92b6bc976fffd96"
      default))
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(cider company corfu dashboard doom-modeline doom-themes
+	   eclipse-theme go-mode lsp-mode marginalia neotree php-mode
+	   smartparens treemacs-evil treemacs-nerd-icons
+	   vertico-posframe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -227,10 +234,10 @@
  ;; If there is more than one, they won't work right.
  )
  
-(save-place-mode 1)
-(recentf-mode 1)
-(setq recentf-max-menu-items 50)
-(setq recentf-max-saved-items 50)
+;; (save-place-mode 1)
+;; (recentf-mode 1)
+;; (setq recentf-max-menu-items 50)
+;; (setq recentf-max-saved-items 50)
 
 (use-package treemacs
   :ensure t
