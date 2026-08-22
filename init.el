@@ -2,6 +2,7 @@
 (keymap-global-set "C-c p r" 'package-refresh-contents)
 (keymap-global-set "<f5>" 'customize-themes)
 (keymap-global-set "<f8>" 'treemacs)
+;; (keymap-global-set "g d" 'lsp-find-definition)
 
 (setq inhibit-startup-message t)
 
@@ -35,7 +36,6 @@
  
 (electric-pair-mode 1)
 
-
 (use-package php-mode
  :ensure t)
  
@@ -50,6 +50,15 @@
         ("\\.cljc\\'" . clojurec-mode)
         ("\\.edn\\'" . clojure-mode))
  :config)
+ 
+(use-package lsp-mode
+ :ensure t
+ :hook (prog-mode . lsp)
+ :commands lsp
+ :config
+ ;; Optional: Enable premium feature licence key if you have one
+ ;; (setq lsp-intelephense-licence-key "YOUR_KEY_HERE")
+)
   
 (use-package evil
  :ensure t
@@ -211,6 +220,20 @@
 (use-package treemacs-evil
   :after (treemacs evil)
   :ensure t)
-
-
-
+ 
+(use-package company
+  :ensure t
+  :init
+  (global-company-mode)
+  :config
+  (setq company-idle-delay 0.1          ; Delay in seconds before showing completion
+        company-minimum-prefix-length 2 ; Characters needed to trigger completion
+        company-selection-wrap-around t)  ; Wrap around end of candidate list
+  
+  :bind
+  (:map company-active-map
+        ("C-j" . company-select-next)
+        ("C-k" . company-select-previous)
+        ("C-n" . company-complete-selection)
+        ("RET" . company-complete-selection)))
+	
