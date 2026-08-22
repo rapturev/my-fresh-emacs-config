@@ -51,6 +51,38 @@
         ("\\.edn\\'" . clojure-mode))
  :config)
  
+(use-package cider
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'clojure-mode-hook #'cider-mode)
+  :config
+  ;; --- REPL Behavior ---
+  ;; Always wrap long lines in the REPL buffer
+  (setq cider-repl-wrap-history t)
+  (setq cider-repl-history-file (expand-file-name "cider-history" user-emacs-directory))
+  
+  ;; --- Quality of Life UX ---
+  ;; Prevent the REPL buffer from popping up automatically on jack-in
+  (setq cider-repl-pop-to-buffer-on-connect nil)
+  ;; Jump directly to error logs when compilation fails
+  (setq cider-show-error-buffer t)
+  (setq cider-auto-select-error-buffer t)
+  
+  ;; --- Evaluation Output ---
+  ;; Log evaluation results straight into the minibuffer instead of overlays if preferred
+  (setq cider-overlays-use-font-lock t)
+  
+  ;; --- Documentation & Lookup ---
+  ;; ElDoc provides inline function signatures at the bottom screen
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  ;; Help CIDER locate documentation symbols faster
+  (setq cider-prompt-for-symbol nil)
+
+  ;; --- Keybindings ---
+  ;; Quick shortcut to jack-in without a project file
+  (global-set-key (kbd "C-c C-x j j") 'cider-jack-in-clj))
+
 (use-package lsp-mode
  :ensure t
  :hook (prog-mode . lsp)
