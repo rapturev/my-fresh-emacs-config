@@ -99,26 +99,12 @@
  ;; Optional: Enable premium feature licence key if you have one
  ;; (setq lsp-intelephense-licence-key "YOUR_KEY_HERE")
  )
- 
- (setq lsp-enable-file-watchers nil)
-
   
 (use-package evil
  :ensure t
  :init
  :config)
 (evil-mode 1)
-
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode)
-  :config
-  ;; Grow and shrink the minibuffer dynamically
-  (setq vertico-resize t)
-  
-  ;; Optionally enable cycling for the candidate list
-  (setq vertico-cycle t))
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -311,9 +297,9 @@
   (setq dashboard-startup-banner 'official)
   
   ;; Content configuration: choose widgets and item limits
-  (setq dashboard-items '((recents  . 15)
+  (setq dashboard-items '((recents  . 12)
                           (bookmarks . 5)
-                          (projects . 10)
+                          (projects . 5)
                           (agenda . 5)))
   
   ;; Project backend ('project-el is built-in, 'projectile is optional)
@@ -322,6 +308,9 @@
   ;; UI Styling adjustments
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts t))
+
+
+ 
 
 
 	
