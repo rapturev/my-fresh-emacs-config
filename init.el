@@ -208,11 +208,7 @@
      "26e644fb119d4f5e4b576bae0e37e949721cb43ca6d234c9318208bad2b77cf6"
      "4c92d278dc295b63daf817d668523d442058d6c90728958dc92b6bc976fffd96"
      default))
- '(package-selected-packages
-   '(cider company corfu dashboard doom-modeline doom-themes
-	   eclipse-theme go-mode lsp-mode marginalia neotree php-mode
-	   smartparens treemacs-evil treemacs-nerd-icons
-	   vertico-posframe)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -308,6 +304,36 @@
   ;; UI Styling adjustments
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts t))
+  
+(use-package helm
+  :ensure t
+  :init
+  ;; Change the default helm prefix key from "C-x c" to "C-c h" to avoid accidental exits
+  (setq helm-command-prefix-key "C-c h")
+  :bind (;; Core Helm replacements for built-in Emacs commands
+         ("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
+         ("C-x r b" . helm-filtered-bookmarks)
+         ("M-y" . helm-show-kill-ring)
+         ;; Bind the custom Helm prefix to its command map
+         ("C-c h" . helm-command-prefix))
+  :config
+  ;; Use fuzzy matching across major commands
+  (setq helm-M-x-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t
+        helm-locallm-fuzzy-match t)
+
+  ;; UI and Layout adjustments
+  (setq helm-split-window-inside-p t          ; Open helm buffer inside current window
+        helm-move-to-line-cycle-in-source t   ; Move back to top when reaching bottom
+        helm-scroll-amount 8                  ; Scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-search-library-in-path t)     ; Search libraries in load-path
+
+  ;; Enable Helm globally for all standard completion hooks
+  (helm-mode 1))
+
 
 
  
