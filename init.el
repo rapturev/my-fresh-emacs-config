@@ -1,7 +1,7 @@
 (keymap-global-set "C-c p p" 'package-list-packages)
 (keymap-global-set "C-c p r" 'package-refresh-contents)
 (keymap-global-set "<f5>" 'customize-themes)
-(keymap-global-set "<f8>" 'treemacs)
+;; (keymap-global-set "<f8>" 'treemacs)
 ;; (keymap-global-set "g d" 'lsp-find-definition)
 (keymap-global-set "C-x <f1>" 'dashboard-open)
 
@@ -220,35 +220,6 @@
 ;; (recentf-mode 1)
 ;; (setq recentf-max-menu-items 50)
 ;; (setq recentf-max-saved-items 50)
-
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :custom
-  ;; Configure sizing and behavior
-  (treemacs-width 35)
-  (treemacs-is-never-other-window t) ; Skip treemacs when cycling windows via C-x o
-  (treemacs-silent-refresh t)
-  
-  ;; Enable useful visual integrations
-  (treemacs-git-mode 'simple)        ; Highlight files based on Git status ('extended for directories)
-  (treemacs-filewatch-mode t)        ; Refresh automatically on file system changes
-  (treemacs-follow-mode t)           ; Keep treemacs in sync with your current buffer
-  
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-		
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
  
 (use-package company
   :ensure t
