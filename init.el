@@ -332,9 +332,15 @@
         helm-ff-search-library-in-path t)     ; Search libraries in load-path
 
   ;; Enable Helm globally for all standard completion hooks
-  (helm-mode 1))
+  (helm-mode 1)
+  (with-eval-after-load 'helm-files
+    (define-key helm-find-files-map (kbd "C-k") 'helm-previous-line)
+	(define-key helm-find-files-map (kbd "C-j") 'helm-next-line)
+	(define-key helm-find-files-map (kbd "C-l") 'helm-ff-RET)
+	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
+	
 
-
+ 
 
  
 
