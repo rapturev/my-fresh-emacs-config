@@ -99,6 +99,10 @@
  ;; Optional: Enable premium feature licence key if you have one
  ;; (setq lsp-intelephense-licence-key "YOUR_KEY_HERE")
  )
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
   
 (use-package evil
  :ensure t
