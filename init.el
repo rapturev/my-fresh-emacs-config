@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (keymap-global-set "C-c p p" 'package-list-packages)
 (keymap-global-set "C-c p r" 'package-refresh-contents)
 (keymap-global-set "<f5>" 'customize-themes)
@@ -15,7 +17,7 @@
 
 (menu-bar-mode -1)    
 
-(set-face-attribute 'default nil :font "Cascadia Code NF" :height 125)
+(set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
 
 ;; Set PowerShell as the default M-x shell on Windows
 (when (eq system-type 'windows-nt)
@@ -50,6 +52,15 @@
 (use-package go-mode
  :ensure t
  :mode "\\.go\\'")
+
+(use-package rustic
+  :ensure t
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-next-error)
+              ("M-p" . rustic-popup)
+              ("C-c C-c l" . rustic-cargo-clippy)
+              ("C-c C-c r" . rustic-cargo-run)
+              ("C-c C-c t" . rustic-cargo-test)))
  
 (use-package clojure-mode
  :ensure t
@@ -102,7 +113,13 @@
 
 (use-package lsp-ui
   :ensure t
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode))
+  
+(use-package lsp-java
+  :ensure t
+  :config
+  (add-hook 'java-mode-hook 'lsp))
   
 (use-package evil
  :ensure t
@@ -140,7 +157,7 @@
      "7c3d62a64bafb2cc95cd2de70f7e4446de85e40098ad314ba2291fc07501b70c"
      "1f292969fc19ba45fbc6542ed54e58ab5ad3dbe41b70d8cb2d1f85c22d07e518"
      "4d5d11bfef87416d85673947e3ca3d3d5d985ad57b02a7bb2e32beaf785a100e"
-     "7771c8496c10162220af0ca7b7e61459cb42d18c35ce272a63461c0fc1336015"
+     "7771c8496c10162220af0ca7b7e6\12\11 1459cb42d18c35ce272a63461c0fc1336015"
      "5c8a1b64431e03387348270f50470f64e28dfae0084d33108c33a81c1e126ad6"
      "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d"
      "77fff78cc13a2ff41ad0a8ba2f09e8efd3c7e16be20725606c095f9a19c24d3d"
@@ -212,7 +229,11 @@
      "26e644fb119d4f5e4b576bae0e37e949721cb43ca6d234c9318208bad2b77cf6"
      "4c92d278dc295b63daf817d668523d442058d6c90728958dc92b6bc976fffd96"
      default))
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(cider company corfu dashboard doom-modeline doom-themes
+	   eclipse-theme go-mode helm lsp-java lsp-ui marginalia
+	   neotree php-mode rustic sidebuf smartparens treemacs-evil
+	   treemacs-nerd-icons vertico-posframe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -314,10 +335,13 @@
 	(define-key helm-find-files-map (kbd "C-l") 'helm-ff-RET)
 	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
 	
+(with-eval-after-load 'cc-mode
+  ;; Для Си
+  (define-key c-mode-map (kbd "RET") 'c-context-line-break))
 
- 
+;; Если вы используете современный java-ts-mode (Tree-sitter) в Emacs 29+:
+;;  (with-eval-after-load 'java-ts-mode
+;;    (define-key java-ts-mode-map (kbd "RET") 'newline-and-indent))
 
- 
+(add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode))
 
-
-	
