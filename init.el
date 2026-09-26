@@ -230,9 +230,10 @@
      "4c92d278dc295b63daf817d668523d442058d6c90728958dc92b6bc976fffd96"
      default))
  '(package-selected-packages
-   '(cider company corfu counsel dashboard doom-modeline doom-themes
-	   eclipse-theme go-mode helm ivy lsp-java lsp-ui marginalia
-	   neotree php-mode rustic sidebuf smartparens treemacs-evil
+   '(cider company consult corfu counsel dashboard doom-modeline
+	   doom-themes eclipse-theme go-mode helm ivy ivy-prescient
+	   lsp-java lsp-ui marginalia neotree orderless php-mode
+	   rustic sidebuf smartparens treemacs-evil
 	   treemacs-nerd-icons vertico-posframe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -300,37 +301,40 @@
   ;; UI Styling adjustments
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts t))
-  
-;; Configure Ivy, Counsel, and Swiper
-(use-package ivy
-  :ensure t
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) "))
 
-(use-package counsel
+(use-package helm
   :ensure t
-  :diminish
+  :init
+  ;; Change the default helm prefix key from "C-x c" to "C-c h" to avoid accidental exits
+  (setq helm-command-prefix-key "C-c h")
+  :bind (;; Core Helm replacements for built-in Emacs commands
+         ("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)
+         ("C-x r b" . helm-filtered-bookmarks)
+         ("M-y" . helm-show-kill-ring)
+         ;; Bind the custom Helm prefix to its command map
+         ("C-c h" . helm-command-prefix))
   :config
-  (counsel-mode 1))
+  ;; Use fuzzy matching across major commands
+  (setq helm-M-x-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t
+        helm-locallm-fuzzy-match t)
 
-(use-package swiper
-  :ensure t)
+  ;; UI and Layout adjustments
+  (setq helm-split-window-inside-p t          ; Open helm buffer inside current window
+        helm-move-to-line-cycle-in-source t   ; Move back to top when reaching bottom
+        helm-scroll-amount 8                  ; Scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-search-library-in-path t)     ; Search libraries in load-path
+
+  ;; Enable Helm globally for all standard completion hooks
+  (helm-mode 1)
+  (with-eval-after-load 'helm-files
+    (define-key helm-find-files-map (kbd "C-k") 'helm-previous-line)
+	(define-key helm-find-files-map (kbd "C-j") 'helm-next-line)
+	(define-key helm-find-files-map (kbd "C-l") 'helm-ff-RET)
+	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
 
 	
 (with-eval-after-load 'cc-mode
