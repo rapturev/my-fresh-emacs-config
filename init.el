@@ -116,10 +116,10 @@
   :commands lsp-ui-mode
   :hook (lsp-mode . lsp-ui-mode))
   
-(use-package lsp-java
-  :ensure t
-  :config
-  (add-hook 'java-mode-hook 'lsp))
+;;  (use-package lsp-java
+;;  :ensure t
+;;  :config
+;;  (add-hook 'java-mode-hook 'lsp))
   
 (use-package evil
  :ensure t
@@ -337,13 +337,4 @@
 	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
 
 	
-(with-eval-after-load 'cc-mode
-  ;; Для Си
-  (define-key c-mode-map (kbd "RET") 'c-context-line-break))
-
-;; Если вы используете современный java-ts-mode (Tree-sitter) в Emacs 29+:
-;;  (with-eval-after-load 'java-ts-mode
-;;    (define-key java-ts-mode-map (kbd "RET") 'newline-and-indent))
-
-(add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode))
 
