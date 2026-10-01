@@ -122,10 +122,10 @@
 ;;  (add-hook 'java-mode-hook 'lsp))
   
 (use-package evil
- :ensure t
- :init
- :config)
-(evil-mode 1)
+  :ensure t
+  :config
+  (evil-mode 1))
+
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
@@ -229,11 +229,12 @@
      "26e644fb119d4f5e4b576bae0e37e949721cb43ca6d234c9318208bad2b77cf6"
      "4c92d278dc295b63daf817d668523d442058d6c90728958dc92b6bc976fffd96"
      default))
+ '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages
    '(cider company consult corfu counsel dashboard doom-modeline
 	   doom-themes eclipse-theme go-mode helm ivy ivy-prescient
-	   lsp-java lsp-ui marginalia neotree orderless php-mode
-	   rustic sidebuf smartparens treemacs-evil
+	   ligature lsp-java lsp-ui marginalia neotree orderless
+	   php-mode rustic sidebuf smartparens treemacs-evil
 	   treemacs-nerd-icons vertico-posframe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -332,9 +333,21 @@
   (helm-mode 1)
   (with-eval-after-load 'helm-files
     (define-key helm-find-files-map (kbd "C-k") 'helm-previous-line)
-	(define-key helm-find-files-map (kbd "C-j") 'helm-next-line)
-	(define-key helm-find-files-map (kbd "C-l") 'helm-ff-RET)
-	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
+  	(define-key helm-find-files-map (kbd "C-j") 'helm-next-line)
+  	(define-key helm-find-files-map (kbd "C-l") 'helm-ff-RET)
+  	(define-key helm-find-files-map (kbd "C-h") 'helm-find-files-up-one-level)))
 
+(use-package ligature
+  :ensure t
+  :config
+  ;; Enable all common coding ligatures for program modes
+  (ligature-set-ligatures 'prog-mode
+    '("|||" ">>>" "+++" "||" "&&" "=>" "->" "::" "==" "===" "!=" "!==" "=:=" 
+      ">=" "<=" ">>" "<<" "->>" "<-" "<--" "-->" "---" "---" "==" "<=>" 
+      "_|_" "##" "###" "####" ".-" ".=" ".." "..<" "++" "?? " "::=" 
+      "/*" "*/" "///" "//"))
+  
+  ;; Global enablement of the mode
+  (global-ligature-mode t))
 	
 
